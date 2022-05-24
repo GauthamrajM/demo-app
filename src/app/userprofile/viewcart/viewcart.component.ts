@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/authentication.service';
+import { CartService } from 'src/app/cart.service';
 import { UserserviceService } from 'src/app/userservice.service';
 
 @Component({
@@ -11,7 +12,7 @@ export class ViewcartComponent implements OnInit {
   user;
   cartProduct;
   constructor(private authService:AuthenticationService,
-    private us:UserserviceService,) { }
+    private cs:CartService,) { }
 
   ngOnInit(): void {
     this.user=this.authService.currentUser;
@@ -19,12 +20,13 @@ export class ViewcartComponent implements OnInit {
   }
 
   private viewCart(username){
-    this.us.viewCart(username).subscribe({
+    this.cs.viewCart(username).subscribe({
       next:(res)=>{
 
         let userObj=res['payload']
         //console.log(user)
         this.cartProduct=userObj.products;
+        
         //console.log("cart product",this.cartProduct)
         // this.router.navigateByUrl(`/userprofile/viewcart/${username}`)
       },
@@ -37,7 +39,7 @@ export class ViewcartComponent implements OnInit {
   removeCart(id){
     // console.log(id);
 
-      this.us.deleteCartProductbyId(id).subscribe({
+      this.cs.deleteCartProductbyId(id).subscribe({
         next:(response)=>{
           console.log(response)
           //alert("User removed");

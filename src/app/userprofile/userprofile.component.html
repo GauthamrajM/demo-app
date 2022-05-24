@@ -6,7 +6,10 @@
         style="border-radius: 50%;">
     </h6>
     <div>
-        <button type="submit" class="cart-btn btn btn-sm float-end mt-3 btn-primary" (click)="viewCart(user?.username)"><i class="fa-solid fa-cart-arrow-down p-1"></i></button>
+        <button type="submit" class="cart-btn btn btn-sm position-relative float-end mt-3 btn-primary" (click)="viewCart(user?.username)"><i class="fa-solid fa-cart-arrow-down p-1"></i><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {{cartCount}}
+            <span class="visually-hidden">unread messages</span>
+          </span></button>
     </div>
     <!-- <button class="btn btn-sm btn-info" (click)="getProtected()">Get Protected data</button> -->
     <h1 class="text-center">Products</h1>

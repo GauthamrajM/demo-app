@@ -17,7 +17,7 @@ const createCart = expressAsyncHandler(async (req, res) => {
     
     //if user already existed
     if(cartOfDB!==null){
-        let product=cartObj.products[0]
+        let product=cartObj.products[0];
         //console.log(product)
         let result= await cartCollectionObject.updateOne({username:cartObj.username},{$push:{products:product}})
         //console.log(result)
@@ -43,7 +43,7 @@ const viewCart=expressAsyncHandler(async(req,res)=>{
     let usernameOfUrl =   req.params.username;
     // console.log("user",usernameOfUrl)
     //get user by id from usercollection
-    let user = await cartCollectionObject.findOne({username:usernameOfUrl})
+    let cart = await cartCollectionObject.findOne({username:usernameOfUrl})
     //send res
     res.status(200).send({message:"List of products" ,payload:cart})
 })
@@ -57,8 +57,8 @@ const deleteProduct = expressAsyncHandler(async(req,res)=>{
     let productFromUrl =   (+req.params.id);
     console.log(productFromUrl)
     //get user by id from usercollection
-    let result = await cartCollectionObject.deleteOne({cartProduct:productFromUrl})
-    // console.log(result)
+    let result = await cartCollectionObject.deleteOne({products:productFromUrl},{$pull:{products:productFromUrl}})
+     console.log(result)
     //send res
     if(result.deletedCount==1){
         res.status(204).send({message:"Product removed"})
